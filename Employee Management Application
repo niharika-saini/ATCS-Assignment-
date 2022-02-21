@@ -1,0 +1,185 @@
+// Employee.java
+
+===============================================================================================================
+package my.employee;
+
+
+// Encapsulate Class 
+public class Employee {
+	 private String ename;
+	 private float esalary;
+	 private String eAddress;
+	 private int epincode;
+	 
+	//Getter and Setter method 
+	public String getEname() {
+		return ename;
+	}
+	public void setEname(String ename) {
+		this.ename = ename;
+	}
+	public float getEsalary() {
+		return esalary;
+	}
+	public void setEsalary(float esalary) {
+		this.esalary = esalary;
+	}
+	public String geteAddress() {
+		return eAddress;
+	}
+	public void seteAddress(String eAddress) {
+		this.eAddress = eAddress;
+	}
+	public int getEpincode() {
+		return epincode;
+	}
+	public void setEpincode(int epincode) {
+		this.epincode = epincode;
+	}
+	
+	// Default Constructor 
+	public Employee() {
+		
+	}
+	
+	// Param Constructor 
+	public Employee(String ename, float esalary, String eAddress,int epincode) {
+		super();
+		this.ename=ename;
+		this.esalary=esalary;
+		this.eAddress=eAddress;
+		this.epincode=epincode;
+	}
+	
+	// toString Method 
+	@Override
+	public String toString() {
+		return "Employee [ename=" + ename + ", esalary=" + esalary + ", eAddress=" + eAddress + ", epincode=" + epincode
+				+ "]";
+	}
+	
+}
+------------------------------------------------------------------------------------------------------------	 
+
+
+// Client.java
+========================================================================================================================
+
+package my.employee;
+
+// Import Packages
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.Map.Entry;
+
+public class client {
+	//main Class 
+	public static void main(String[] args) {
+		// HashMap 
+		HashMap<Integer,Employee> emp = new HashMap<>();
+		int eid=101;
+		
+		// While loop
+		while (true) {
+			System.out.println("Employee Management Application:");
+			System.out.println("1. Add Employee ");
+			System.out.println("2. Update Employee");
+			System.out.println("3.Delete Employee");
+			System.out.println("4. Get Employee information ");
+			System.out.println("5. Get All employees Information");
+			
+			//Scanner used
+			Scanner sc =new Scanner(System.in);
+			System.out.println("Which operation you want to perform.....");
+			int option = sc.nextInt();
+			
+			// Switch Statement 
+			switch(option) {
+			
+			// Add Employee
+			case 1 : System.out.println("Want to add Employee Details....");
+			         System.out.println("Details Are...");
+			         System.out.println("Enter name of Employee:");
+			         String  ename1 = sc.next();
+			         System.out.println("Enter Salary of Employee:");
+			         float esalary1 =sc.nextFloat();
+			         System.out.println("Enter address of Employee:");
+			         String eAddress1 =sc.next();
+			         System.out.println("Enter Pincode of Employee Address:");
+			         int epincode1=sc.nextInt();
+			         
+			         // Calling Constructor
+			         
+			         Employee e=new Employee(ename1,esalary1,eAddress1,epincode1);
+			         emp.put(++eid, e);
+			         System.out.println("Employee added in our Company Successfully..."+eid);
+			         break;
+			         
+			// Update Employee Details          
+			case 2: System.out.println("Want to update Employee information...");
+			        System.out.println("Enter ID which you want to Update...");
+			        int eid1=sc.nextInt();
+			        System.out.println("Enter name of Employee:");
+			        String  ename2= sc.next();
+			        System.out.println("Enter Salary of Employee:");
+			        float esalary2 =sc.nextFloat();
+			        System.out.println("Enter address of Employee:");
+			        String eAddress2 =sc.next();
+			        System.out.println("Enter Pincode of Employee Address:");
+			        int epincode2=sc.nextInt();
+			        
+			        Employee e1 =Employee(ename2,esalary2,eAddress2,epincode2);
+			        emp.put(eid1, e1);
+			        System.out.println("Employee Details Updated Successfully....");
+			        break;
+			        
+			// Delete Employee Detail        
+			case 3: System.out.println("Want to delete the Employee Details..");
+			        System.out.println("Enter ID which you want to Remove:");
+			        int eid2=sc.nextInt();
+			        Employee e2=emp.remove(eid2);
+			        System.out.println("Employee Removed.."+eid2);
+			        break;
+			        
+			 // Get Employee Information       
+			case 4:System.out.println("Get the Information of Employee..");
+			       System.out.println("Enter ID of Employee:");
+			       int eid3=sc.nextInt();
+			       Employee e3=emp.get(eid3);
+			       System.out.println("Get the Employee Detail ..."+e3);
+			       break;
+			       
+			 // Get all Employee Information
+			case 5:System.out.println("All Employee Information:");
+			       Set<Entry<Integer,Employee>> res=emp.entrySet();
+			       Iterator<Entry<Integer,Employee>> itr=res.iterator();
+			        while(itr.hasNext()) {
+			        	Entry<Integer,Employee> finalres=itr.next();
+			        	System.out.println(finalres.getKey()+" "+finalres.getValue());
+			        }
+			        break;
+			 default: System.out.println("Please Choose from Above One only ...");       
+			        
+			        
+				
+			
+			}
+			
+		}
+		
+	}
+
+	private static Employee Employee(String ename2, float esalary2, String eAddress2, int epincode2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
+
+	
+	 
+	
+
