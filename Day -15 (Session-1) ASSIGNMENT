@@ -1,0 +1,306 @@
+Session 1
+
+============================================================
+
+1.	Create a Thread by extending the Thread class.
+package my.thread;
+
+class MyThread extends Thread{
+	public void run() {
+		for(int i=1;i<11;i++) {
+			System.out.println("Child Thread...");
+		}
+	}
+}
+public class ThreadEx {
+	public static void main(String[] args) {
+		MyThread m=new MyThread();
+		m.start();
+		for(int i=1;i<11;i++) {
+			System.out.println("Main Thread...");
+		}
+		
+	}
+}
+-----------------------------------------------------
+Output:
+
+Main Thread...
+Child Thread...
+Child Thread...
+Child Thread...
+Child Thread...
+Child Thread...
+Child Thread...
+Main Thread...
+Main Thread...
+Main Thread...
+Main Thread...
+Main Thread...
+Main Thread...
+Main Thread...
+Main Thread...
+Main Thread...
+Child Thread...
+Child Thread...
+Child Thread...
+Child Thread...
+
+
+
+
+================================================================
+2.	Create a Thread by Implements the Runnable Interface.
+
+package my.thread;
+
+class MyRunnable implements Runnable{
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		System.out.println("This is Child Thread...");
+		
+	}
+}
+public class RunnableEx {
+	public static void main(String[] args) {
+		MyRunnable r= new MyRunnable();
+		Thread t= new Thread(r);
+		t.start();
+		System.out.println("This is Main Thread...");
+	}
+
+}
+
+----------------------------------------------------------
+Output:
+This is Main Thread...
+This is Child Thread...
+
+
+
+
+
+
+===============================================================================
+3.	Create a Thread by extending Thread class set and get the name of thread.
+
+package my.thread;
+
+class MyThread1 extends Thread{
+	public void run() {
+		System.out.println("Child Thread...");
+		System.out.println(Thread.currentThread().getName());
+	}
+}
+public class GetName {
+	public static void main(String[] args) {
+		MyThread1 m=new MyThread1();
+		m.start();
+		m.setName("Niharika");
+		
+		System.out.println("Main Thread...");
+		System.out.println(Thread.currentThread().getName());
+		Thread.currentThread().setName("Jaipur");
+		System.out.println(Thread.currentThread().getName());
+		
+	}
+
+}
+
+
+--------------------------------------------------------------------
+OUTPUT:
+Main Thread...
+main
+Jaipur
+Child Thread...
+Niharika
+
+
+
+
+
+
+==================================================================================
+
+4.	Create a Thread by extending Thread class set and get the priority of thread.
+
+package my.thread;
+
+class Priority extends Thread{
+	public void run() {
+		System.out.println("Child Thread..");
+		System.out.println(Thread.currentThread().getPriority());
+	}
+}
+
+public class PriorityEx {
+	public static void main(String[] args) {
+		Priority m= new Priority();
+		m.setPriority(7);
+		m.start();
+		System.out.println("Main Thread...");
+		System.out.println(Thread.currentThread().getPriority());
+		Thread.currentThread().setPriority(4);
+		System.out.println(Thread.currentThread().getPriority());
+	}
+
+}
+
+----------------------------------------------------------------------
+OUTPUT:
+
+Main Thread...
+Child Thread..
+7
+5
+4
+
+
+
+
+
+
+=========================================================================
+5.	 Create a Thread by extending Thread class apply Yield Method.
+
+package my.thread;
+
+class Yield extends Thread{
+	public void run() {
+		for(int i=0;i<5;i++) {
+			System.out.println("Child Thread..");
+			Thread.yield();
+		}
+	}
+}
+public class YieldEx {
+	public static void main(String[] args) {
+		Yield y= new Yield();
+		y.start();
+		for(int i=0;i<5;i++) {
+			System.out.println("Main Thread..");
+		}
+	}
+
+}
+
+
+
+-------------------------------------------------------------------------
+OutPut:
+
+Main Thread..
+Child Thread..
+Main Thread..
+Main Thread..
+Main Thread..
+Main Thread..
+Child Thread..
+Child Thread..
+Child Thread..
+Child Thread..
+
+
+
+
+
+
+
+=========================================================================
+
+6.	Create a Thread by extending Thread class apply join Method.
+
+package my.thread;
+
+class Join extends Thread{
+	public void run() {
+		for(int i=0;i<6;i++) {
+			System.out.println("Child Thread..");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+}
+public class JoinEx {
+	public static void main(String[] args) {
+		Join j= new Join();
+		j.start();
+		try {
+			j.join(8000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for(int i=0;i<6;i++) {
+			System.out.println("Main Thread..");	
+		}
+		
+	}
+
+}
+
+
+----------------------------------------------------------------------
+
+OUTPUT:
+
+Child Thread..
+Child Thread..
+Child Thread..
+Child Thread..
+Main Thread..
+Main Thread..
+Main Thread..
+Main Thread..
+Main Thread..
+Main Thread..
+Child Thread..
+Child Thread..
+
+
+
+
+
+
+
+
+==========================================================================
+7.	Create a Thread by extending Thread class apply sleep Method.
+
+package my.thread;
+
+public class Sleep {
+	public static void main(String[] args) {
+		for(int n=0;n<6;n++) {
+			System.out.println("Thread show --> "+n);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+}
+
+
+-----------------------------------------------------------------
+
+OUTPUT:
+Thread show --> 0
+Thread show --> 1
+Thread show --> 2
+Thread show --> 3
+Thread show --> 4
+Thread show --> 5
+
+
