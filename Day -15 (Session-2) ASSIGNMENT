@@ -1,0 +1,206 @@
+SESSION-2
+=======================================================================================
+
+1. Create a Deadlock class to demonstrate deadlock in multithreading environment.
+
+
+package my.thread;
+
+class A{
+	public synchronized void d1(B b) {
+		System.out.println("Thread 1 Start execution of d1() method");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Thread 1 try to call B's Last method");
+		b.last();
+	}
+	public synchronized void last() {
+		System.out.println("Inside A this is last Method");
+	}
+}
+class B{
+	public synchronized void d2(A a) {
+		System.out.println("Thread 1 Start execution of d1() method");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Thread 1 try to call B's Last method");
+		a.last();	
+	}
+	public synchronized void last() {
+		System.out.println("Inside A this is last Method");
+	}
+	
+}
+
+public class DeadLock extends Thread {
+	A a= new A();
+	B b=new B();
+	
+	public void m1() {
+		this.start();
+		a.d1(b);
+	}
+		
+	public void run() {
+		b.d2(a);
+		
+	}
+	public static void main(String[] args) {
+		DeadLock dd=new DeadLock();
+		dd.m1();
+	}
+
+}
+
+-------------------------------------------------------------------------------------
+OUTPUT:
+Thread 1 Start execution of d1() method
+Thread 1 Start execution of d1() method
+Thread 1 try to call B's Last method
+Thread 1 try to call B's Last method
+
+
+
+
+
+=======================================================================================
+
+
+
+2.	Implement wait, notify and notifyAll methods.
+
+
+package my.thread;
+class Customer{
+	int a=5000;
+	 synchronized void withdraw(int a) {
+		System.out.println("Going to Withdraw Money");
+		if(a>5000) {
+			System.out.println("Less Balanace.....Wait For Deposition");
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		this.a-=a;
+		System.out.println("Withdraw Completed...");
+		
+		
+	}
+	 synchronized void deposite(int a) {
+		System.out.println("Going to Deposite Money");
+		this.a+=a;
+		System.out.println("Deposition Completed...");
+		notify();
+	}
+}
+public class InterCommunication {
+	public static void main(String[] args) {
+		Customer c =new Customer();
+		new Thread() {
+			public void run() {
+				c.withdraw(7000);
+			}
+			
+		}.start();
+		new Thread() {
+			public void run() {
+				c.deposite(3000);
+			}
+		}.start();
+	}
+}
+
+
+
+---------------------------------------------------------------------------------------------
+Output:
+Going to Withdraw Money
+Less Balanace.....Wait For Deposition
+Going to Deposite Money
+Deposition Completed..
+Withdraw Completed...
+
+
+
+
+
+====================================================================================================================
+3.	Create a Account class with methods withdraw, deposit, enquiry, add with synchronized keywords observe the output.
+
+package my.thread;
+
+class Account{
+	int amt=20000;
+	synchronized void withdraw(int amt) {
+		System.out.println("Going to Withdraw");
+		if(amt>20000) {
+			System.out.println("Less Balance ...Please Deposit first to Withdraw..");
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		this.amt-=amt;
+		System.out.println("Withdraw Successfully...");
+	}
+	synchronized void deposite(int amt) {
+		System.out.println("Going to Deposite");
+		this.amt+=amt;
+		System.out.println("Deposited SuccessFully...");
+		notify();
+	}
+	synchronized void Enquiry() {
+		System.out.println("Want to check remaining Balance");
+		this.amt=amt;
+		System.out.println("Remaining Amount in Your Account is-->"+amt);
+		notifyAll();
+	}
+}
+public class AccountEx {
+	public static void main(String[] args) {
+		Account a=new Account();
+		new Thread(){
+			public void run() {
+				a.withdraw(30000);
+			}
+		}.start();
+		
+		new Thread(){
+			public void run() {
+				a.deposite(20000);
+			}
+		}.start();
+		
+		new Thread(){
+			public void run() {
+				a.Enquiry();;
+			}
+		}.start();
+	}
+
+}
+
+
+
+---------------------------------------------------------------------------------------------------------------
+OUTPUT:
+Going to Withdraw
+Less Balance ...Please Deposit first to Withdraw..
+Going to Deposite
+Deposited SuccessFully...
+Withdraw Successfully...
+Want to check remaining Balance
+Remaining Amount in Your Account --> 10000
