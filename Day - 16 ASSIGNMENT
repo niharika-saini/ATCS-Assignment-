@@ -1,0 +1,292 @@
+Session 1
+
+=============================================================================
+
+1.	Working with Lambda & Lambda Block.
+
+
+package my.java8;
+
+interface Demo{
+	public void d();
+}
+public class Lambda {
+	public static void main(String[] args) {
+		int a=20;
+		Demo dt=()-> System.out.println("value of a using Lambda-"+a);
+		dt.d();
+		
+		
+		System.out.println("Values using Block Lambda ---");
+		Demo dt1=()->{
+			for(int i=2;i<20;i=i+2) {
+				
+				System.out.println(i);
+			}
+		};
+		dt1.d();
+	}
+
+}
+
+
+
+------------------------------------------------------------------------------
+OUTPUT:
+value of a using Lambda-20
+Values using Block Lambda ---
+2
+4
+6
+8
+10
+12
+14
+16
+18
+
+
+
+
+==================================================================================
+
+2.	Create a Runnable interface and apply lamda expression.
+
+
+package my.java8;
+
+public class RunnableEx {
+	public static void main(String[] args) {
+		
+		Runnable r=()->{
+			for(int i=0;i<6;i++) {
+				System.out.println("Child Thread");
+			}
+		};
+		Thread t=new Thread(r);
+		t.start();
+		
+		for(int i=0;i<6;i++) {
+			System.out.println("Main Thread");
+		}
+	}
+}
+
+----------------------------------------------------------------------------------
+
+
+OUTPUT:
+Main Thread
+Child Thread
+Child Thread
+Child Thread
+Child Thread
+Child Thread
+Child Thread
+Main Thread
+Main Thread
+Main Thread
+Main Thread
+Main Thread
+
+
+
+
+====================================================================================
+
+3.	Create a class SqureRoot apply lamdaexpreesions.
+
+
+package my.java8;
+
+interface Square{
+	public void root();
+}
+public class SquareRoot {
+	public static void main(String[] args) {
+		int s=5;
+		System.out.print("Square Root of " +s+" is :");
+		Square sq=()->System.out.println(Math.sqrt(s));
+		sq.root();
+	}
+
+}
+
+
+--------------------------------------------------------------------------------
+OUTPUT:
+Square Root of 5 is :2.23606797749979
+
+
+
+
+==================================================================================
+4.	Create a class with addition method with parameters.
+package my.java8;
+
+interface demo2{
+	public int addition(int a , int b);
+}
+public class AdditionNumbers {
+	public static void main(String[] args) {
+		
+		demo2 d1=(int a ,int b)->{System.out.println("Addition of 2 Numbers:"+(a+b));
+		return a;};
+		d1.addition(2,3);
+	}
+
+}
+
+---------------------------------------------------------------------------------------
+Output:
+Addition of 2 Numbers:5
+
+
+
+==========================================================================================
+
+5.	Create a ArrayList class add values apply lamda expression.
+
+package my.java8;
+
+import java.util.ArrayList;
+
+public class Arraylist2 {
+	public static void main(String[] args) {
+		ArrayList<String> ar=new ArrayList<String>();
+		ar.add("Abhay");
+		ar.add("Babli");
+		ar.add("Chintu");
+		ar.add("Dev");
+		
+		ar.forEach(
+				(n)->System.out.println(n));
+	}
+
+}
+
+
+--------------------------------------------------------------------------------------------
+OUTPUT:
+Abhay
+Babli
+Chintu
+Dev
+
+
+
+
+
+==============================================================================================
+Session 2
+
+===============================================================================================
+
+1.	Take predicate functional interface test given value even number or not.
+package my.java8;
+
+import java.util.function.Predicate;
+
+public class Predicate1 {
+	public static void main(String[] args) {
+		Predicate<Integer> p1=i->i%2==0;
+		
+		System.out.println(p1.test(45));
+		System.out.println(p1.test(24));
+		System.out.println(p1.test(57));
+	}
+
+}
+
+
+-----------------------------------------------------------------------------------------------
+OUTPUT:
+false
+true
+false
+
+
+
+
+
+=============================================================================================
+
+2.	Take predicate functional interface test length of the given name is greater than 6 or not?
+package my.java8;
+
+import java.util.function.Predicate;
+
+public class Predicate2 {
+	public static void main(String[] args) {
+		//Predicate<String> p2=i->i.length()>6;
+		
+		String[] s= {"Niharika","Manisha","Mansi","Riya"};
+		Predicate<String> p2=i->i.length()>6;
+		
+		for(String s1:s) {
+			if(p2.test(s1)) {
+				System.out.println(p2.test(s1));
+			}
+		}
+		
+	}
+
+}
+
+
+---------------------------------------------------------------------------------------------
+OUTPUT
+true
+true
+
+
+
+
+================================================================================================
+
+3.	Create a employee class with ArrayList class add key value pair name,salary, findout salary>7000?
+
+package my.java8;
+
+import java.util.ArrayList;
+import java.util.function.Predicate; 
+
+class Emp{
+	String ename;
+	int esalary;
+	public Emp(String ename, int esalary) {
+		this.ename=ename;
+		this.esalary=esalary;
+	}
+	public String toString() {
+		return ename+" "+esalary;
+	}
+}
+
+public class Employee {
+	public static void main(String[] args) {
+		ArrayList<Emp> ar=new ArrayList<Emp>();
+		ar.add(new Emp("Niharika",10000));
+		ar.add(new Emp("Mansi",5000));
+		ar.add(new Emp("Manish",2000000));
+		ar.add(new Emp("paras",3000));
+		//System.out.println(ar);
+		
+		for(Emp e:ar) {
+			Predicate<Emp> p =a->e.esalary>7000;
+			System.out.println(p.test(e));
+		}
+	}
+
+}
+
+
+------------------------------------------------------------------------------------------------
+OUTPUT:
+true
+false
+true
+false
+
+
+
