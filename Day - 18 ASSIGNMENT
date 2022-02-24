@@ -94,3 +94,107 @@ niharika1=# select * from stud;
 
 
 
+
+
+=====================================================================================================================================
+
+2.    CRUD operations on Pizza add,update,delete,create
+
+
+
+package com.JDBC;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Pizza {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		
+		Class.forName("org.postgresql.Driver");
+		
+		Connection conn=DriverManager.getConnection("jdbc:postgresql://localhost/niharika1","postgres", "niharika");
+		
+		Statement stmt = conn.createStatement();
+		
+		boolean res1=stmt.execute("create table Pizza(pizza_type varchar(20),pizza_size varchar(10),pizza_rate int)");
+		int res2=stmt.executeUpdate("insert into Pizza values('Cheese Pizza','Small',100)");
+		int res3=stmt.executeUpdate("insert into Pizza values('Corn Pizza','Medium',200)");
+		int res4=stmt.executeUpdate("insert into Pizza values('Vegetable Pizza','Large',400)");
+		
+		int res5=stmt.executeUpdate("update Pizza set pizza_type='Double Cheese Pizza' where pizza_size='Large'");
+		
+		int res6=stmt.executeUpdate("delete from pizza");
+		conn.close();
+		
+		System.out.println("Table is created:"+res1);
+		System.out.println("Value-1 inserted :"+res2);
+		System.out.println("Value-2 inserted :"+res3);
+		System.out.println("Value-3 inserted :"+res4);
+		System.out.println("Update Value :"+res5);
+		System.out.println("Delete from table:"+res6);
+	}
+
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+OUTPUT
+
+
+-------------------------------------------------------
+• Create a Table
+Table is created:false
+
+niharika1=# select * from pizza;
+ pizza_type | pizza_size | pizza_rate
+------------+------------+------------
+(0 rows)
+--------------------------------------------------------
+
+
+----------------------------------------------------------
+• Insert Values in Table
+Value-1 inserted :1
+Value-2 inserted :1
+Value-3 inserted :1
+
+niharika1=# select * from pizza;
+   pizza_type    | pizza_size | pizza_rate
+-----------------+------------+------------
+ Cheese Pizza    | Small      |        100
+ Corn Pizza      | Medium     |        200
+ Vegetable Pizza | Large      |        400
+(3 rows)
+------------------------------------------------------------------
+
+
+-----------------------------------------------------------------
+•   Update Table
+Update Value :1
+
+niharika1=# select * from pizza;
+     pizza_type      | pizza_size | pizza_rate
+---------------------+------------+------------
+ Cheese Pizza        | Small      |        100
+ Corn Pizza          | Medium     |        200
+ Double Cheese Pizza | Large      |        400
+(3 rows)
+--------------------------------------------------------------------
+
+
+--------------------------------------------------------------------
+• Delete From Table
+Delete from table:3
+
+niharika1=# select * from pizza;
+ pizza_type | pizza_size | pizza_rate
+------------+------------+------------
+(0 rows)
+--------------------------------------------------------------------
+
+
+
+
+
+
