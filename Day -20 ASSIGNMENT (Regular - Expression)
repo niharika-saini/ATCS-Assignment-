@@ -1,0 +1,171 @@
+REGULAR   EXPRESSION
+=============================================================================
+
+
+Example -1 
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class regex1 {
+	public static void main(String[] args) {
+		Pattern p=Pattern.compile("ab");
+		Matcher m=p.matcher("aabsfaabababaertsabcab");
+		
+		int count=0;
+		while(m.find()) {
+			count++;
+			System.out.println(m.start()+" - "+m.end()+"-> "+m.group());
+		}
+		System.out.println("Number of Pattern Occurence--> "+count);
+	}
+
+}
+
+-----------------------------------------------------------------------------
+
+OUTPUT:
+1 - 3-> ab
+6 - 8-> ab
+8 - 10-> ab
+10 - 12-> ab
+17 - 19-> ab
+20 - 22-> ab
+Number of Pattern Occurence--> 6
+
+
+=============================================================================
+
+
+Example -2 
+package my.regex;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class regex2 {
+public static void main(String[] args) {
+	Pattern p=Pattern.compile("[man]");
+	Matcher m=p.matcher("mann@rtu#456");
+	while(m.find()) {
+		System.out.println(m.start());
+		
+	}
+	
+}
+}
+
+--------------------------------------------------------------------------------
+OUTPUT:
+0
+1
+2
+3
+
+
+=================================================================================
+Example -3
+package my.regex;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class regex3 {
+	public static void main(String[] args) {
+		Pattern p=Pattern.compile("\\s");
+		Matcher m=p.matcher("ab @ert #tyu");
+		while(m.find()) {
+			System.out.println(m.start());
+		}
+		
+	}
+
+}
+
+----------------------------------------------------------------------------------
+OUTPUT:
+2
+7
+
+
+=====================================================================================
+
+
+Example -4
+package my.regex;
+
+import java.util.regex.Pattern;
+
+public class regex4 {
+public static void main(String[] args) {
+	Pattern p=Pattern.compile("\\s");
+	String[] s= p.split("Niharika Saini from Jaipur Rajasthan");
+	for(String s1:s) {
+		System.out.println(s1);
+	}
+}
+}
+
+-----------------------------------------------------------------------------------------
+
+OUTPUT:
+Niharika
+Saini
+from
+Jaipur
+Rajasthan
+
+
+===========================================================================================
+Example -5
+package my.regex;
+
+import java.util.regex.Pattern;
+
+public class regex5 {
+	public static void main(String[] args) {
+		Pattern p=Pattern.compile("a");
+		String[] s=p.split("Niharika Saini");
+		for(String n:s) {
+			System.out.println(n);
+		}
+	}
+
+}
+
+---------------------------------------------------------------------------------------
+OUTPUT:
+Nih
+rik
+ S
+ini
+
+======================================================================================
+
+Example -6
+package my.regex;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class regex6 {
+	public static void main(String[] args) {
+		Pattern p=Pattern.compile("(0|91)?[7-9][0-9]{9}");
+		Matcher m=p.matcher(args[0]);
+		if(m.find() && m.group().equals(args[0])){
+			System.out.println("Number is Valid...");
+		}
+		else {
+			System.out.println("Number is not valid ...");
+		}
+	}
+
+}
+
+-------------------------------------------------------------------------------------------
+OUTPUT:
+Number is Valid...
+
+
+
+
