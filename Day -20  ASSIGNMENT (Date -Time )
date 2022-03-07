@@ -1,0 +1,226 @@
+DATE -Time
+=====================================================================
+
+Example -1 
+package my.datetime;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+public class datetime1 {
+public static void main(String[] args) {
+	LocalDate dt=LocalDate.now();
+	System.out.println("Today's date is - "+dt);
+	
+	LocalTime tm=LocalTime.now();
+	System.out.println("Current time is - "+tm);
+}
+}
+
+-----------------------------------------------------------------------------
+OUTPUT:
+Today's date is - 2022-03-07
+Current time is - 15:11:39.000711100
+
+
+
+==============================================================================
+
+Example -2
+package my.datetime;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+public class datetime2 {
+	public static void main(String[] args) {
+		LocalDate dt=LocalDate.now();
+		System.out.println("Date is = "+dt);
+		
+		int dd=dt.getDayOfMonth();
+		int mm=dt.getMonthValue();
+		int yy=dt.getYear();
+		
+		System.out.println("Day-"+dd+"\n"+"Month-"+mm+"\n"+"Year-"+yy);
+		System.out.printf("%d-%d-%d",dd,mm,yy);
+	}
+
+}
+ 
+ ------------------------------------------------------------------------------
+ 
+OUTPUT:
+Date is = 2022-03-07
+Day-7
+Month-3
+Year-2022
+7-3-2022
+
+
+
+==================================================================================
+
+Example -3 
+package my.datetime;
+
+import java.time.LocalTime;
+
+public class datetime3 {
+	public static void main(String[] args) {
+		LocalTime tm=LocalTime.now();
+		System.out.println("Time is : "+tm);
+		
+		int h=tm.getHour();
+		int m=tm.getMinute();
+		int s=tm.getSecond();
+		int ns=tm.getNano();
+		
+		System.out.println("Hour:"+h+"\n"+"Minute:"+m+"\n"+"Second:"+s+"\n"+"Nano Second :"+ns);
+		
+
+}
+}
+
+----------------------------------------------------------------------------------
+OUTPUT:
+Time is : 15:26:04.214029500
+Hour:15
+Minute:26
+Second:4
+Nano Second :214029500
+
+
+
+==================================================================================
+
+Example -4 
+package my.datetime;
+
+import java.time.LocalDateTime;
+
+public class datetime4 {
+	public static void main(String[] args) {
+	LocalDateTime dt=LocalDateTime.now();
+	System.out.println("Current Date-Time-> "+dt);
+}
+}
+
+----------------------------------------------------------------------------------
+OUTPUT:
+Current Date-Time-> 2022-03-07T15:27:54.372107400
+
+
+
+==================================================================================
+
+Example -5 
+package my.datetime;
+
+import java.time.LocalDateTime;
+
+public class datetime5 {
+	public static void main(String[] args) {
+		LocalDateTime dt=LocalDateTime.of(2002, 8, 16, 13, 48, 52);
+		
+		System.out.println("After 7 MONTHS --> "+dt.plusMonths(7));
+		System.out.println("Before 6 Months -->  "+dt.minusMonths(6));
+	}
+
+}
+
+
+---------------------------------------------------------------------------------
+OUTPUT:
+After 7 MONTHS --> 2003-03-16T13:48:52
+Before 6 Months -->  2002-02-16T13:48:52
+
+
+
+================================================================================
+Example -6 
+package my.datetime;
+
+import java.time.LocalDate;
+import java.time.Period;
+
+public class datetime6 {
+	public static void main(String[] args) {
+		LocalDate bdt=LocalDate.of(1997, 11, 16);
+		
+		LocalDate dt=LocalDate.now();
+		
+		Period p=Period.between(bdt, dt);
+		
+		System.out.printf("Age is %d Year %d Month %d Days",p.getYears(),p.getMonths(),p.getDays());
+	}
+
+}
+
+
+----------------------------------------------------------------------------------
+OUTPUT:
+Age is 24 Year 3 Month 19 Days
+
+
+
+=====================================================================================
+
+Example -7 
+package my.datetime;
+
+import java.time.Year;
+import java.util.Scanner;
+
+public class datetime7 {
+	public static void main(String[] args) {
+		
+		Scanner sc= new Scanner(System.in);
+		System.out.println("Enter the Year:");
+		int n=sc.nextInt();
+		
+		Year y= Year.of(n);
+		if(y.isLeap()) {
+			System.out.printf("%d is a leap Year",y);
+		}
+		else {
+			System.out.printf("%d is not a Leap Year",y);
+		}
+		
+	}
+
+}
+
+
+--------------------------------------------------------------------------------------
+OUTPUT:
+Enter the Year:
+2023
+2023 is not a Leap Year
+
+
+
+=======================================================================================
+Example -8 
+package my.datetime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
+
+public class datetime8 {
+	public static void main(String[] args) {
+		ZoneId z=ZoneId.systemDefault();
+		System.out.println(z);
+		
+		ZoneId z1=ZoneId.of("Asia/Singapore");
+		ZonedDateTime dt=ZonedDateTime.now(z1);
+		System.out.println(dt);
+		
+	}
+
+}
+
+---------------------------------------------------------------------------------------
+OUTPUT:
+Asia/Calcutta
+2022-03-07T18:43:33.789759600+08:00[Asia/Singapore]
+
