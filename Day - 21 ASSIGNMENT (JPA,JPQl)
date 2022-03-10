@@ -1,0 +1,294 @@
+**********************************************************JPA******************************************************
+
+employee.java
+----------------------------------------------------->
+
+package employee_jpa;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class employee {
+	
+		@Id
+		private int empid;
+		private String empname;
+		private int empsal;
+		private String empAdd;
+		
+		
+		public int getEmpid() {
+			return empid;
+		}
+		public void setEmpid(int empid) {
+			this.empid = empid;
+		}
+		public String getEmpname() {
+			return empname;
+		}
+		public void setEmpname(String empname) {
+			this.empname = empname;
+		}
+		public int getEmpsal() {
+			return empsal;
+		}
+		public void setEmpsal(int empsal) {
+			this.empsal = empsal;
+		}
+		public String getEmpAdd() {
+			return empAdd;
+		}
+		public void setEmpAdd(String empAdd) {
+			this.empAdd = empAdd;
+		}
+		
+		public employee() {
+			// TODO Auto-generated constructor stub
+		}
+		public employee(int empid, String empname, int empsal, String empAdd) {
+			super();
+			this.empid = empid;
+			this.empname = empname;
+			this.empsal = empsal;
+			this.empAdd = empAdd;
+		}
+		@Override
+		public String toString() {
+			return "Employee [empid=" + empid + ", empname=" + empname + ", empsal=" + empsal + ", empAdd=" + empAdd + "]";
+		}
+}
+
+
+--------------------------------------------------------------------------
+
+test.java
+--------------------------------------------->
+
+package employee_jpa;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+public class test {
+public static void main(String[] args) {
+
+	EntityManagerFactory factory=Persistence.createEntityManagerFactory("niharika");
+	
+	EntityManager entity=factory.createEntityManager(); 
+	
+	//persist()-->save or insert, merge()-->update, remove()-->delte, find()==>selct fetch
+	
+	employee emp= new employee(123, "niharika", 100000, "Barsana");
+	
+	entity.getTransaction().begin();
+	
+	entity.persist(emp);
+
+	entity.getTransaction().commit();
+	
+}
+}
+
+-------------------------------------------------------------------------------
+
+persistence.xml
+
+------------------------------------------------------->
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+                      http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+  version="2.0">
+  
+	<persistence-unit name="niharika" transaction-type="RESOURCE_LOCAL">
+	
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>employee_jpa.employee</class>
+
+		<properties>
+		<!-- database properties -->
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/niharika1" />
+			<property name="javax.persistence.jdbc.user" value="postgres" />
+			<property name="javax.persistence.jdbc.password" value="niharika" />
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+			
+			<!-- hibernate properties -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="hibernate.hbm2ddl.auto" value="create"/> <!-- create/update  -->
+			<property name="hibernate.show_sql" value="true"/>
+		</properties>
+		
+	</persistence-unit>
+	
+</persistence>
+
+
+
+
+******************************************************************JPQL************************************************************
+
+
+employee.java
+------------------------------------------------>
+
+package my.jpql;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class employee {
+
+	@Id
+	private int empId;
+    @Column(length=15)
+	private String empName;
+	private int empSal;
+	  @Column(length=15)
+	private String empAdd;
+	public int getEmpId() {
+		return empId;
+	}
+	public void setEmpId(int empId) {
+		this.empId = empId;
+	}
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+	public int getEmpSal() {
+		return empSal;
+	}
+	public void setEmpSal(int empSal) {
+		this.empSal = empSal;
+	}
+	public String getEmpAdd() {
+		return empAdd;
+	}
+	public void setEmpAdd(String empAdd) {
+		this.empAdd = empAdd;
+	}
+	
+	public employee() {
+		// TODO Auto-generated constructor stub
+	}
+	public employee(int empId, String empName, int empSal, String empAdd) {
+		super();
+		this.empId = empId;
+		this.empName = empName;
+		this.empSal = empSal;
+		this.empAdd = empAdd;
+	}
+	@Override
+	public String toString() {
+		return "Employee [empId=" + empId + ", empName=" + empName + ", empSal=" + empSal + ", empAdd=" + empAdd + "]";
+	}
+	
+	
+}
+
+----------------------------------------------------------------------------
+
+
+test.java
+-------------------------------------------->
+
+package my.jpql;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import java.util.List;
+
+public class test {
+	public static void main(String[] args) {
+		
+		EntityManagerFactory factory=Persistence.createEntityManagerFactory("Manager");
+		
+		EntityManager entity= factory.createEntityManager();
+		
+		entity.getTransaction().begin();
+		
+	//inserted
+	
+        employee e= new employee(100, "dIVYA", 10000, "KNL");
+		employee e1= new employee(101, "TARUN", 12000, "KURNOOL");
+		employee e2= new employee(102, "SATHYA", 13000, "HYD");
+		employee e3= new employee(103, "MAHESH", 14000, "KMPL");
+		entity.persist(e);
+		entity.persist(e1);
+		entity.persist(e2);
+		entity.persist(e3);
+		
+		TypedQuery<employee> tq=entity.createQuery("select e from employee e", employee.class);
+		
+    List<employee> li=tq.getResultList();			
+		for(employee s:li) 
+		{
+			
+			System.out.println(s.getEmpId());
+			System.out.println(s.getEmpName());		
+			System.out.println(s.getEmpSal());
+	}
+
+	//update	
+  Query result=entity.createQuery("update Employee set empSal= empSal+50000 where empSal>10000");	          
+  result.executeUpdate();
+	      
+	      
+	//delete         
+	 Query result = entity.createQuery("delete from  Employee where empSal>10000");
+	 result.executeUpdate();
+	                    
+		entity.getTransaction().commit();
+		
+		entity.close();
+		factory.close();
+		System.out.println("inserted");
+		
+		
+	}
+}
+
+
+----------------------------------------------------------------------
+
+persistence.xml
+------------------------------------------------>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+                      http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+  version="2.0">
+  
+	<persistence-unit name="Manager" transaction-type="RESOURCE_LOCAL">
+	
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>my.jpql.employee</class>
+		
+		<properties>
+		<!-- database properties -->
+		
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/niharika1" />
+			<property name="javax.persistence.jdbc.user" value="postgres" />
+			<property name="javax.persistence.jdbc.password" value="niharika" />
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+			<!-- hibernate properties -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="hibernate.hbm2ddl.auto" value="create"/><!-- create/update  -->
+			<property name="hibernate.show_sql" value="true"/>
+		</properties>
+		
+	</persistence-unit>
+	
+</persistence>
