@@ -1,0 +1,302 @@
+**************************************************************SPRING********************************************************
+
+employee.java
+--------------------------------------------->
+package my.spring;
+
+public class employee {
+	private int empid;
+	private String empname;
+	private int empsal;
+	private String empAdd;
+	public int getEmpid() {
+		return empid;
+	}
+	public void setEmpid(int empid) {
+		this.empid = empid;
+	}
+	public String getEmpname() {
+		return empname;
+	}
+	public void setEmpname(String empname) {
+		this.empname = empname;
+	}
+	public int getEmpsal() {
+		return empsal;
+	}
+	public void setEmpsal(int empsal) {
+		this.empsal = empsal;
+	}
+	public String getEmpAdd() {
+		return empAdd;
+	}
+	public void setEmpAdd(String empAdd) {
+		this.empAdd = empAdd;
+	}
+	public employee() {
+		// TODO Auto-generated constructor stub
+	}
+	public employee(int empid, String empname, int empsal, String empAdd) {
+		super();
+		this.empid = empid;
+		this.empname = empname;
+		this.empsal = empsal;
+		this.empAdd = empAdd;
+	}
+	@Override
+	public String toString() {
+		return "employee [empid=" + empid + ", empname=" + empname + ", empsal=" + empsal + ", empAdd=" + empAdd + "]";
+	}
+}
+
+-------------------------------------------------------------------------------------
+
+test.java
+-------------------------------------------->
+
+ackage my.spring;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+@SuppressWarnings("deprecation")
+public class test {
+	public static void main(String[] args) {
+		
+		Resource resource = new ClassPathResource("springConfig.xml");
+		
+		BeanFactory factory=new XmlBeanFactory(resource);
+		
+		employee emp= (employee) factory.getBean("java");
+		
+		System.out.println(emp);
+	}
+}
+
+
+----------------------------------------------------------------------------------------
+
+springconfig.xml
+
+------------------------------------------->
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<context:annotation-config></context:annotation-config>
+	
+<bean class="my.spring.employee" id="java">
+	
+<property name="empid" value="102"></property>
+<property name="empname" value="Niharika"></property>
+<property name="empsal" value="10000"></property>
+<property name="empAdd" value="Jaipur"></property>
+	
+</bean>
+	
+	
+</beans>	
+
+
+
+----------------------------------------------------------------
+----------------------------------------------------------------
+OUTPUT:
+
+Mar 10, 2022 4:40:17 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [springConfig.xml]
+employee [empid=102, empname=Niharika, empsal=10000, empAdd=Jaipur]
+
+
+==========================================================================================================================================
+
+
+***************************************************************SPRING-2*********************************************************************
+
+employee.java
+----------------------------------------------->
+
+
+public class employee {
+	
+	private int empid;
+	private String empname;
+	private int empsal;
+	Address address;
+	public int getEmpid() {
+		return empid;
+	}
+	public void setEmpid(int empid) {
+		this.empid = empid;
+	}
+	public String getEmpname() {
+		return empname;
+	}
+	public void setEmpname(String empname) {
+		this.empname = empname;
+	}
+	public int getEmpsal() {
+		return empsal;
+	}
+	public void setEmpsal(int empsal) {
+		this.empsal = empsal;
+	}
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	public employee() {
+		// TODO Auto-generated constructor stub
+	}
+	public employee(int empid, String empname, int empsal, Address address) {
+		super();
+		this.empid = empid;
+		this.empname = empname;
+		this.empsal = empsal;
+		this.address = address;
+	}
+	@Override
+	public String toString() {
+		return "employee [empid=" + empid + ", empname=" + empname + ", empsal=" + empsal + ", address=" + address
+				+ "]";
+	}
+}
+
+
+-------------------------------------------------------------------
+
+
+Address.java
+------------------------------------------------->
+
+package my.spring1;
+
+public class Address {
+	
+	private int homeno;
+	private String colony;
+	private String distinct;
+	private String state;
+	public int getHomeno() {
+		return homeno;
+	}
+	public void setHomeno(int homeno) {
+		this.homeno = homeno;
+	}
+	public String getColony() {
+		return colony;
+	}
+	public void setColony(String colony) {
+		this.colony = colony;
+	}
+	public String getDistinct() {
+		return distinct;
+	}
+	public void setDistinct(String distinct) {
+		this.distinct = distinct;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	
+	public Address() {
+		// TODO Auto-generated constructor stub
+	}
+	public Address(int homeno, String colony, String distinct, String state) {
+		super();
+		this.homeno = homeno;
+		this.colony = colony;
+		this.distinct = distinct;
+		this.state = state;
+	}
+	@Override
+	public String toString() {
+		return "Address [homeno=" + homeno + ", colony=" + colony + ", distinct=" + distinct + ", state=" + state + "]";
+	}
+}
+
+
+----------------------------------------------------------
+
+
+test.java
+------------------------------------------>
+package my.spring1;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+@SuppressWarnings("deprecation")
+public class test {
+	public static void main(String[] args) {
+		
+		Resource resource = new ClassPathResource("springconfig.xml");
+		BeanFactory factory=new XmlBeanFactory(resource);
+		
+		employee emp=(employee) factory.getBean("java");
+		
+		System.out.println(emp);
+	}
+
+}
+
+
+------------------------------------------------------------
+
+springconfig.xml
+------------------------------------------>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<context:annotation-config></context:annotation-config>
+	
+<bean class="my.spring1.employee" id="java">
+	
+<property name="empid" value="102"></property>
+<property name="empname" value="Niharika"></property>
+<property name="empsal" value="10000"></property>
+<property name="Address" ref="add"></property>
+	
+</bean>
+	
+<bean class="my.spring1.Address" id="add">
+	
+<property name="homeno" value="1002"></property>
+<property name="colony" value="kisan marg , barkat nagar"></property>
+<property name="distinct" value="Jaipur"></property>
+<property name="state" value="Rajasthan"></property>
+	
+</bean>
+		
+	
+</beans>	
+
+
+---------------------------------------------------------
+--------------------------------------------------------
+
+OUTPUT
+
+Mar 10, 2022 5:00:05 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [springconfig.xml]
+employee [empid=102, empname=Niharika, empsal=10000, address=Address [homeno=1002, colony=kisan marg , barkat nagar, distinct=Jaipur, state=Rajasthan]]
+
