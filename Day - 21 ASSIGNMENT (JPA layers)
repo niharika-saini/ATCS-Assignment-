@@ -1,0 +1,289 @@
+*****************************************************************Entity File**************************************************
+
+Student.java
+--------------------------------------------->
+package com.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Student {
+	@Id
+	private int sid;
+	@Column(length=15)
+	private String sname;
+	private int sclass;
+	@Column(length=20)
+	private String shobby;
+	public int getSid() {
+		return sid;
+	}
+	public void setSid(int sid) {
+		this.sid = sid;
+	}
+	public String getSname() {
+		return sname;
+	}
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
+	public int getSclass() {
+		return sclass;
+	}
+	public void setSclass(int sclass) {
+		this.sclass = sclass;
+	}
+	public String getShobby() {
+		return shobby;
+	}
+	public void setShobby(String shobby) {
+		this.shobby = shobby;
+	}
+	 public Student() {
+		// TODO Auto-generated constructor stub
+	}
+	public Student(int sid, String sname, int sclass, String shobby) {
+		super();
+		this.sid = sid;
+		this.sname = sname;
+		this.sclass = sclass;
+		this.shobby = shobby;
+	}
+	@Override
+	public String toString() {
+		return "Student [sid=" + sid + ", sname=" + sname + ", sclass=" + sclass + ", shobby=" + shobby + "]";
+	}
+	
+}
+
+
+===========================================================================================================================
+
+**************************************************************Dao File*****************************************************************
+
+JavaUtil.java
+---------------------------------------------->
+package com.dao;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+public class JavaUtil {
+	private static EntityManagerFactory factory;
+	private static EntityManager entityManager;
+	
+	static {
+		factory = Persistence.createEntityManagerFactory("school");
+	}
+	public static EntityManager getEntityManager() {
+		if(entityManager==null || !entityManager.isOpen()) {
+			entityManager = factory.createEntityManager();
+		}
+		return entityManager;
+ 	}
+
+}
+
+
+================================================================================================================================
+
+
+
+StudentDao.java
+----------------------------------------------->
+package com.dao;
+
+import com.entity.Student;
+
+public interface StudentDao {
+	Student getStudentById(int id);
+	void addStudent(Student student);
+	void updateStudent(Student student);
+	void deleteStudent(Student student);
+	void commitTransaction();
+	void beginTransaction();
+
+}
+
+
+=============================================================================================================================
+
+
+
+
+StudentDaoImp.java
+------------------------------------------------->
+package com.dao;
+import javax.persistence.EntityManager;
+
+import com.entity.Student;
+
+public class StudentDaoImp {
+	private EntityManager entityManager;
+	public StudentDaoImp() {
+		entityManager = JavaUtil.getEntityManager();
+	}
+	
+	public Student getStudentById(int id) {
+		Student student = entityManager.find(Student.class, id);
+		return student;
+	}
+
+	public void addStudent(Student student) {
+		entityManager.persist(student);
+	}
+
+	public void updateStudent(Student student) {
+		entityManager.merge(student);
+	}
+
+	public void deleteStudent(Student student) {
+		entityManager.remove(student);
+	}
+
+	public void commitTransaction() {
+		entityManager.getTransaction().commit();
+	}
+
+	public void beginTransaction() {
+		entityManager.getTransaction().begin();
+	}
+}
+
+
+==================================================================================================================================
+
+
+**********************************************************Service File ************************************************
+
+StudentService.java
+---------------------------------------------->
+
+ackage com.service;
+
+import com.entity.Student;
+
+public interface StudentService {
+	void addStudent(Student student);
+	void updateStudent(Student student);
+	void deleteStudent(Student student);
+	Student findStudentById(int id);
+
+
+
+}
+
+
+====================================================================================================================================
+
+
+
+StudentServiceImp.java
+----------------------------------------------->
+package com.service;
+
+import com.dao.StudentDaoImp;
+import com.entity.Student;
+
+
+public class StudentServiceImp {
+	private StudentDaoImp daon;
+	public StudentServiceImp() {
+		daon =  new StudentDaoImp();
+	}
+	public void addStudent(Student student) {
+		daon.beginTransaction();
+		daon.addStudent(student);
+		daon.commitTransaction();
+	}
+
+	public void updateStudent(Student student) {
+		daon.beginTransaction();
+		daon.updateStudent(student);
+		daon.commitTransaction();
+	}
+
+	public void deleteStudent(Student student) {
+		daon.beginTransaction();
+		daon.deleteStudent(student);
+		daon.commitTransaction();
+	}
+
+	public Student findStudentById(int id) {
+		//data fetch
+		Student student = daon.getStudentById(id);
+		return student;
+	}
+
+}
+
+
+====================================================================================================================================
+
+
+
+****************************************************************Client File***************************************************************
+
+client.java
+------------------------------------------------>
+
+package com.client;
+
+import com.entity.Student;
+import com.service.StudentServiceImp;
+
+public class client {
+	public static void main(String[] args) {
+		StudentServiceImp service =  new StudentServiceImp();
+		Student student = new Student(100,"Niharika",8,"Badminton");
+		service.addStudent(student);
+	}
+
+}
+
+
+========================================================================================================================
+
+
+
+*********************************************************************persistence XML file *******************************************************************
+
+persistence.xml
+---------------------------------------->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+                      http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+  version="2.0">
+  
+	<persistence-unit name="school" transaction-type="RESOURCE_LOCAL">
+	
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>com.entity.Student</class>
+
+		<properties>
+		<!-- database properties -->
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/niharika1" />
+			<property name="javax.persistence.jdbc.user" value="postgres" />
+			<property name="javax.persistence.jdbc.password" value="niharika" />
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+			
+			<!-- hibernate properties -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="hibernate.hbm2ddl.auto" value="create"/> <!-- create/update  -->
+			<property name="hibernate.show_sql" value="true"/>
+		</properties>
+		
+	</persistence-unit>
+	
+</persistence>
+	 
+	 
+	
+	
+	
