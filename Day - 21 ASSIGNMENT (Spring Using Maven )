@@ -1,0 +1,357 @@
+***************************************************************EXAMPLE-1****************************************************************
+
+Employee.java
+-------------------------------------->
+package com.springanotation.SpringCore;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.stereotype.Component;
+
+
+@Component("niharika")
+public class Employee {
+	private int empid;
+	private String empname;
+	private int empSal;
+	@Autowired
+	Address Add;
+	public int getEmpid() {
+		return empid;
+	}
+	public void setEmpid(int empid) {
+		this.empid = empid;
+	}
+	public String getEmpname() {
+		return empname;
+	}
+	public void setEmpname(String empname) {
+		this.empname = empname;
+	}
+	public int getEmpSal() {
+		return empSal;
+	}
+	public void setEmpSal(int empSal) {
+		this.empSal = empSal;
+	}
+	public Address getAdd() {
+		return Add;
+	}
+	public void setAdd(Address add) {
+		Add = add;
+	}
+	
+	public Employee() {
+		// TODO Auto-generated constructor stub
+	}
+	public Employee(int empid, String empname, int empSal, Address add) {
+		super();
+		this.empid = empid;
+		this.empname = empname;
+		this.empSal = empSal;
+		Add = add;
+	}
+	@Override
+	public String toString() {
+		return "Employee [empid=" + empid + ", empname=" + empname + ", empSal=" + empSal + ", Add=" + Add + "]";
+	}
+}
+
+==========================================================================================================================
+
+Address.java
+-------------------------------------->
+
+package com.springanotation.SpringCore;
+
+import org.springframework.stereotype.Component;
+
+@Component("Add")
+public class Address {
+	private int homeno;
+	private String colony;
+	private String District;
+	private String State;
+	public int getHomeno() {
+		return homeno;
+	}
+	public void setHomeno(int homeno) {
+		this.homeno = homeno;
+	}
+	public String getColony() {
+		return colony;
+	}
+	public void setColony(String colony) {
+		this.colony = colony;
+	}
+	public String getDistrict() {
+		return District;
+	}
+	public void setDistrict(String district) {
+		District = district;
+	}
+	public String getState() {
+		return State;
+	}
+	public void setState(String state) {
+		State = state;
+	}
+	
+	
+	 public Address() {
+		// TODO Auto-generated constructor stub
+	}
+	public Address(int homeno, String colony, String district, String state) {
+		super();
+		this.homeno = homeno;
+		this.colony = colony;
+		District = district;
+		State = state;
+	}
+	@Override
+	public String toString() {
+		return "Address [homeno=" + homeno + ", colony=" + colony + ", District=" + District + ", State=" + State + "]";
+	}
+}
+
+=========================================================================================================================
+
+AppConfig.java
+------------------------------------------->
+
+package com.springanotation.SpringCore;
+
+import org.springframework.context.annotation.Bean;
+
+public class AppConfig {
+	
+	@Bean("niharika")
+	public Employee getEmployee() {
+		Employee emp=new Employee();
+		emp.setEmpid(123);
+		emp.setEmpname("Niharika");
+		emp.setEmpSal(200000);
+		return emp;
+	}
+	@Bean("Add")
+	public Address getAddress() {
+		Address add=new Address();
+		add.setHomeno(89);
+		add.setColony("Arihant nagar");
+		add.setDistrict("Jaipur");
+		add.setState("Rajasthan");
+		return add;
+	}
+
+}
+
+===========================================================================================================================
+
+test.java
+------------------------------------------->
+
+package com.springanotation.SpringCore;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ComponentScan("com.springanotation.SpringCore")
+public class test {
+	public static void main(String[] args) {
+		@SuppressWarnings("resource")
+		ApplicationContext factory=new AnnotationConfigApplicationContext(AppConfig.class);
+		Employee emp=(Employee) factory.getBean("niharika");
+		System.out.println(emp);
+	}
+
+}
+
+==========================================================================================================================
+
+OUTPUT:
+------------------------------------------->
+Employee [empid=123, empname=Niharika, empSal=200000, Add=Address [homeno=89, colony=Arihant nagar, District=Jaipur, State=Rajasthan]]
+
+
+
+
+
+
+***************************************************************EXAMPLE-2****************************************************************
+
+Employee.java
+-------------------------------------->
+
+package com.springAnnotations.SpringMaven1;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.stereotype.Component;
+
+
+@Component("niharika")
+public class Employee {
+	private int empid;
+	private String empname;
+	private int empSal;
+	@Autowired
+	Address Add;
+	public int getEmpid() {
+		return empid;
+	}
+	public void setEmpid(int empid) {
+		this.empid = empid;
+	}
+	public String getEmpname() {
+		return empname;
+	}
+	public void setEmpname(String empname) {
+		this.empname = empname;
+	}
+	public int getEmpSal() {
+		return empSal;
+	}
+	public void setEmpSal(int empSal) {
+		this.empSal = empSal;
+	}
+	public Address getAdd() {
+		return Add;
+	}
+	public void setAdd(Address add) {
+		Add = add;
+	}
+	
+	public Employee() {
+		// TODO Auto-generated constructor stub
+	}
+	public Employee(int empid, String empname, int empSal, Address add) {
+		super();
+		this.empid = empid;
+		this.empname = empname;
+		this.empSal = empSal;
+		Add = add;
+	}
+	@Override
+	public String toString() {
+		return "Employee [empid=" + empid + ", empname=" + empname + ", empSal=" + empSal + ", Add=" + Add + "]";
+	}
+
+}
+
+==================================================================================================================
+
+Address.java
+-------------------------------------->
+
+ackage com.springAnnotations.SpringMaven1;
+
+import org.springframework.stereotype.Component;
+
+@Component("Add")
+public class Address {
+	
+		private int homeno;
+		private String colony;
+		private String District;
+		private String State;
+		public int getHomeno() {
+			return homeno;
+		}
+		public void setHomeno(int homeno) {
+			this.homeno = homeno;
+		}
+		public String getColony() {
+			return colony;
+		}
+		public void setColony(String colony) {
+			this.colony = colony;
+		}
+		public String getDistrict() {
+			return District;
+		}
+		public void setDistrict(String district) {
+			District = district;
+		}
+		public String getState() {
+			return State;
+		}
+		public void setState(String state) {
+			State = state;
+		}
+		
+		
+		 public Address() {
+			// TODO Auto-generated constructor stub
+		}
+		public Address(int homeno, String colony, String district, String state) {
+			super();
+			this.homeno = homeno;
+			this.colony = colony;
+			District = district;
+			State = state;
+		}
+		@Override
+		public String toString() {
+			return "Address [homeno=" + homeno + ", colony=" + colony + ", District=" + District + ", State=" + State + "]";
+		}
+}
+
+
+===========================================================================================================================
+
+AppConfig.java
+-------------------------------------->
+
+package com.springAnnotations.SpringMaven1;
+
+public class Appconfig {
+
+}
+
+
+==============================================================================================================================
+
+test.java
+-------------------------------------------->
+
+package com.springAnnotations.SpringMaven1;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ComponentScan("com.springAnnotations.SpringMaven1")
+public class test {
+	public static void main(String[] args) {
+		@SuppressWarnings("resource")
+		ApplicationContext factory=new AnnotationConfigApplicationContext(test.class);
+		Employee emp=(Employee) factory.getBean("niharika");
+		emp.setEmpid(123);
+		emp.setEmpname("MAnn");
+		emp.setEmpSal(2000000);
+		
+		Address add=(Address) factory.getBean("Add");
+		add.setHomeno(785);
+		add.setColony("Mahaveer Nagar");
+		add.setDistrict("MAthura");
+		add.setState("Uttar Pradesh");
+		
+		emp.setAdd(add);
+		
+		System.out.println(emp);
+		
+		
+		
+	}
+
+}
+
+
+===========================================================================================================
+
+OUTPUT:
+---------------------------------------->
+Employee [empid=123, empname=MAnn, empSal=2000000, Add=Address [homeno=785, colony=Mahaveer Nagar, District=MAthura, State=Uttar Pradesh]]
